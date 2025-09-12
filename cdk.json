@@ -1,97 +1,86 @@
 {
   "app": "python app.py",
   "watch": {
-    "include": [
-      "**"
-    ],
+    "include": ["**"],
     "exclude": [
       "README.md",
       "cdk*.json",
-      "requirements*.txt",
-      "source.bat",
       "**/__init__.py",
       "python/__pycache__",
       "tests"
     ]
   },
   "context": {
+    "active_stage": "dev",
+    "stages": {
+      "dev": {
+        "region": "us-east-1",
+        "account_id": "149536486629",
+        "stage_name": "dev",
+        "secrets_file": ".env"
+      },
+      "prod": {
+        "region": "us-east-1",
+        "account_id": "149536486629",
+        "stage_name": "prod",
+        "secrets_file": ".env"
+      }
+    },
+    "variables": {
+      "dev": {
+        "key_id": "804f43f6-8d41-4b91-922c-3876aa7f61b5",
+        "parameter": "myapp/access-token"
+      }
+    },
+    "iam_roles_config_files": [
+      "config/iam-roles/http_user_auth_role.json",
+      "config/iam-roles/product_role.json",
+      "config/iam-roles/rest_user_auth_role.json",
+      "config/iam-roles/coffee_shop_role.json"
+    ],
+    "lambda_functions_config_files": [
+      "config/lambda-functions/authorization/auth_request_service.json",
+      "config/lambda-functions/authorization/auth_token_service.json",
+      "config/lambda-functions/authorization/iam_auth_service.json",
+      "config/lambda-functions/authorization/simple_auth_service.json",
+      "config/lambda-functions/product_backend_service.json",
+      "config/lambda-functions/coffee-shop/get.json"
+    ],
+    "http_api_gateway_config_files": [
+      "config/apis/http/product_http_api.json"
+    ],
+    "rest_api_gateway_config_files": [
+      "config/apis/rest/product_rest_api.json"
+    ],
+    "user_pool_cognito_config_files": [
+      "config/cognito/user_pool/my_user_pool.json"
+    ],
+    "identity_pool_cognito_config_files": [
+      "config/cognito/identity_pool/my_identity_pool.json"
+    ],
     "@aws-cdk/aws-lambda:recognizeLayerVersion": true,
     "@aws-cdk/core:checkSecretUsage": true,
-    "@aws-cdk/core:target-partitions": [
-      "aws",
-      "aws-cn"
-    ],
+    "@aws-cdk/core:target-partitions": ["aws", "aws-cn"],
     "@aws-cdk-containers/ecs-service-extensions:enableDefaultLogDriver": true,
     "@aws-cdk/aws-ec2:uniqueImdsv2TemplateName": true,
     "@aws-cdk/aws-ecs:arnFormatIncludesClusterName": true,
+    "@aws-cdk/aws-ecs:containerDefinitionRequiresRepositoryName": true,
+    "@aws-cdk/aws-efs:defaultEncryptionAtRest": true,
     "@aws-cdk/aws-iam:minimizePolicies": true,
-    "@aws-cdk/core:validateSnapshotRemovalPolicy": true,
-    "@aws-cdk/aws-codepipeline:crossAccountKeyAliasStackSafeResourceName": true,
-    "@aws-cdk/aws-s3:createDefaultLoggingPolicy": true,
-    "@aws-cdk/aws-sns-subscriptions:restrictSqsDescryption": true,
-    "@aws-cdk/aws-apigateway:disableCloudWatchRole": true,
-    "@aws-cdk/core:enablePartitionLiterals": true,
-    "@aws-cdk/aws-events:eventsTargetQueueSameAccount": true,
-    "@aws-cdk/aws-ecs:disableExplicitDeploymentControllerForCircuitBreaker": true,
-    "@aws-cdk/aws-iam:importedRoleStackSafeDefaultPolicyName": true,
-    "@aws-cdk/aws-s3:serverAccessLogsUseBucketPolicy": true,
-    "@aws-cdk/aws-route53-patters:useCertificate": true,
-    "@aws-cdk/customresources:installLatestAwsSdkDefault": false,
+    "@aws-cdk/aws-iam:standardizedServicePrincipals": true,
+    "@aws-cdk/aws-kms:defaultKeyPolicies": true,
     "@aws-cdk/aws-rds:databaseProxyUniqueResourceName": true,
-    "@aws-cdk/aws-codedeploy:removeAlarmsFromDeploymentGroup": true,
-    "@aws-cdk/aws-apigateway:authorizerChangeDeploymentLogicalId": true,
-    "@aws-cdk/aws-ec2:launchTemplateDefaultUserData": true,
-    "@aws-cdk/aws-secretsmanager:useAttachedSecretResourcePolicyForSecretTargetAttachments": true,
-    "@aws-cdk/aws-redshift:columnId": true,
-    "@aws-cdk/aws-stepfunctions-tasks:enableEmrServicePolicyV2": true,
-    "@aws-cdk/aws-ec2:restrictDefaultSecurityGroup": true,
-    "@aws-cdk/aws-apigateway:requestValidatorUniqueId": true,
-    "@aws-cdk/aws-kms:aliasNameRef": true,
-    "@aws-cdk/aws-kms:applyImportedAliasPermissionsToPrincipal": true,
-    "@aws-cdk/aws-autoscaling:generateLaunchTemplateInsteadOfLaunchConfig": true,
-    "@aws-cdk/core:includePrefixInUniqueNameGeneration": true,
-    "@aws-cdk/aws-efs:denyAnonymousAccess": true,
-    "@aws-cdk/aws-opensearchservice:enableOpensearchMultiAzWithStandby": true,
-    "@aws-cdk/aws-lambda-nodejs:useLatestRuntimeVersion": true,
-    "@aws-cdk/aws-efs:mountTargetOrderInsensitiveLogicalId": true,
-    "@aws-cdk/aws-rds:auroraClusterChangeScopeOfInstanceParameterGroupWithEachParameters": true,
-    "@aws-cdk/aws-appsync:useArnForSourceApiAssociationIdentifier": true,
-    "@aws-cdk/aws-rds:preventRenderingDeprecatedCredentials": true,
-    "@aws-cdk/aws-codepipeline-actions:useNewDefaultBranchForCodeCommitSource": true,
-    "@aws-cdk/aws-cloudwatch-actions:changeLambdaPermissionLogicalIdForLambdaAction": true,
-    "@aws-cdk/aws-codepipeline:crossAccountKeysDefaultValueToFalse": true,
-    "@aws-cdk/aws-codepipeline:defaultPipelineTypeToV2": true,
-    "@aws-cdk/aws-kms:reduceCrossAccountRegionPolicyScope": true,
-    "@aws-cdk/aws-eks:nodegroupNameAttribute": true,
-    "@aws-cdk/aws-ec2:ebsDefaultGp3Volume": true,
-    "@aws-cdk/aws-ecs:removeDefaultDeploymentAlarm": true,
-    "@aws-cdk/custom-resources:logApiResponseDataPropertyTrueDefault": false,
-    "@aws-cdk/aws-s3:keepNotificationInImportedBucket": false,
-    "@aws-cdk/core:explicitStackTags": true,
-    "@aws-cdk/aws-ecs:enableImdsBlockingDeprecatedFeature": false,
-    "@aws-cdk/aws-ecs:disableEcsImdsBlocking": true,
-    "@aws-cdk/aws-ecs:reduceEc2FargateCloudWatchPermissions": true,
-    "@aws-cdk/aws-dynamodb:resourcePolicyPerReplica": true,
-    "@aws-cdk/aws-ec2:ec2SumTImeoutEnabled": true,
-    "@aws-cdk/aws-appsync:appSyncGraphQLAPIScopeLambdaPermission": true,
-    "@aws-cdk/aws-rds:setCorrectValueForDatabaseInstanceReadReplicaInstanceResourceId": true,
-    "@aws-cdk/core:cfnIncludeRejectComplexResourceUpdateCreatePolicyIntrinsics": true,
-    "@aws-cdk/aws-lambda-nodejs:sdkV3ExcludeSmithyPackages": true,
-    "@aws-cdk/aws-stepfunctions-tasks:fixRunEcsTaskPolicy": true,
-    "@aws-cdk/aws-ec2:bastionHostUseAmazonLinux2023ByDefault": true,
-    "@aws-cdk/aws-route53-targets:userPoolDomainNameMethodWithoutCustomResource": true,
-    "@aws-cdk/aws-elasticloadbalancingV2:albDualstackWithoutPublicIpv4SecurityGroupRulesDefault": true,
-    "@aws-cdk/aws-iam:oidcRejectUnauthorizedConnections": true,
-    "@aws-cdk/core:enableAdditionalMetadataCollection": true,
-    "@aws-cdk/aws-lambda:createNewPoliciesWithAddToRolePolicy": false,
-    "@aws-cdk/aws-s3:setUniqueReplicationRoleName": true,
-    "@aws-cdk/aws-events:requireEventBusPolicySid": true,
-    "@aws-cdk/core:aspectPrioritiesMutating": true,
-    "@aws-cdk/aws-dynamodb:retainTableReplica": true,
-    "@aws-cdk/aws-stepfunctions:useDistributedMapResultWriterV2": true,
-    "@aws-cdk/s3-notifications:addS3TrustKeyPolicyForSnsSubscriptions": true,
-    "@aws-cdk/aws-ec2:requirePrivateSubnetsForEgressOnlyInternetGateway": true,
+    "@aws-cdk/aws-s3:createDefaultLoggingPolicy": true,
+    "@aws-cdk/aws-s3:grantWriteWithoutAcl": true,
+    "@aws-cdk/aws-s3:serverAccessLogsUseBucketPolicy": true,
+    "@aws-cdk/aws-s3:skipPolicyGeneration": true,
+    "@aws-cdk/aws-s3:createDefaultEncryptionPolicy": true,
+    "@aws-cdk/aws-s3:denyUnencryptedObjectUploads": true,
     "@aws-cdk/aws-s3:publicAccessBlockedByDefault": true,
-    "@aws-cdk/aws-lambda:useCdkManagedLogGroup": true
+    "@aws-cdk/aws-sns-subscriptions:restrictSqsDeserialization": true,
+    "@aws-cdk/aws-sns:enableDefaultEncryption": true,
+    "@aws-cdk/aws-sqs:enableDeadLetterQueueWithDefaultPolicy": true,
+    "@aws-cdk/aws-sqs:retainDisallowedQueues": true,
+    "@aws-cdk/aws-stepfunctions:enableLogging": true
   }
 }

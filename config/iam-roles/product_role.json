@@ -1,0 +1,9 @@
+{
+  "role_name": "product-role",
+  "trust_policy_path": "policies/trust_policy.json",
+  "managed_policies": {
+    "basic_execution": "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
+    "cloudwatch": "arn:aws:iam::aws:policy/CloudWatchFullAccess",
+    "dynamodb": "arn:aws:iam::aws:policy/AmazonDynamoDBFullAccess"
+  }
+}

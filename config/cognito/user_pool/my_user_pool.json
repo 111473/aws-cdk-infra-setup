@@ -1,0 +1,37 @@
+{
+  "pool_name": "my-user-pool",
+  "sign_in_identifiers": ["email", "username"],
+  "required_attributes": ["email", "name"],
+  "delete_protection": "Active",
+  "password_policy": {
+    "MinimumLength": 8,
+    "RequireUppercase": true,
+    "RequireLowercase": true,
+    "RequireNumbers": true,
+    "RequireSymbols": true
+  },
+  "user_verification": {
+    "method": "Preferred",
+    "email_message": "Your verification code is {####}",
+    "email_subject": "Verify your email",
+    "sms_message": "Your code is {####}"
+  },
+  "domain": {
+    "domain": "my-app-domain-${timestamp}"
+  },
+  "sign_in": {
+    "username_config": false
+  },
+  "user_management": {
+    "group": {
+      "group_name": "Admins",
+      "group_description": "Administrators with elevated permissions",
+      "group_precedence": 1
+    },
+    "user": {
+      "username": "logan",
+      "email_address": "neilherbertagtuca@gmail.com",
+      "email_verified": true
+    }
+  }
+}

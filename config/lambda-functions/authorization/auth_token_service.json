@@ -1,0 +1,9 @@
+{
+  "service": {
+    "function_name": "auth-token-service",
+    "role_name": "rest-user-auth-role",
+    "handler": "lambda_function.lambda_handler",
+    "runtime": "python3.13",
+    "zip_file": "handler/authorizer/token/function.zip"
+  }
+}

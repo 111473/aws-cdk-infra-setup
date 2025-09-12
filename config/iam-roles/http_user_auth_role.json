@@ -1,0 +1,7 @@
+{
+  "role_name": "http-user-auth-role",
+  "trust_policy_path": "policies/trust_policy.json",
+  "managed_policies": {
+    "basic_execution": "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+  }
+}

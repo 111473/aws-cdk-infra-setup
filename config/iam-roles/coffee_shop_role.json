@@ -1,0 +1,10 @@
+{
+  "role_name": "coffee-shop-role",
+  "trust_policy_path": "policies/trust_policy.json",
+  "managed_policies": {
+    "basic_execution": "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+  },
+  "inline_policy_files": [
+    "policies/coffee_shop_dynamoDB_policy.json"
+  ]
+}

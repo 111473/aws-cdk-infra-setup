@@ -1,0 +1,13 @@
+{
+  "service": {
+    "function_name": "coffee-shop-create",
+    "role_name": "coffee-shop-role",
+    "handler": "lambda_function.lambda_handler",
+    "runtime": "python3.13",
+    "zip_file": "handler/coffee-shop/create/lambda_handler.py",
+    "environment_variables": {
+      "tableName": "CoffeeShop"
+    }
+  }
+}
+

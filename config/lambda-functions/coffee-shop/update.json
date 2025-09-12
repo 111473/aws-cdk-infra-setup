@@ -1,0 +1,9 @@
+{
+  "service": {
+    "function_name": "coffee-shop-update-coffee",
+    "role_name": "coffee-shop-role",
+    "handler": "lambda_function.lambda_handler",
+    "runtime": "python3.13",
+    "zip_file": "handler/coffee-shop/update/lambda_handler.py"
+  }
+}

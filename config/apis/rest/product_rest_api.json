@@ -1,0 +1,78 @@
+{
+  "name": "product-rest-api",
+  "description": "Product REST API",
+  "stage_name": "dev",
+  "resources": {
+    "status": {
+      "function_name": "product-backend-service",
+      "resource_path": "/status",
+      "cors_enabled": true,
+      "integration_type": "LAMBDA",
+      "methods": ["GET", "OPTIONS"],
+      "require_api_key": ["GET"],
+      "authorization": { "GET": "auth-token-service" },
+      "request_validator": { "GET": "None" }
+    },
+    "status1": {
+      "function_name": "product-backend-service",
+      "resource_path": "/status/status1",
+      "cors_enabled": false,
+      "integration_type": "LAMBDA",
+      "methods": ["GET", "OPTIONS"],
+      "require_api_key": ["GET"],
+      "authorization": { "GET": "auth-token-service" },
+      "request_validator": { "GET": "None" }
+    },
+    "product": {
+      "function_name": "product-backend-service",
+      "resource_path": "/product",
+      "cors_enabled": true,
+      "integration_type": "LAMBDA",
+      "methods": ["GET", "DELETE", "PATCH", "POST", "OPTIONS"],
+      "require_api_key": ["GET", "DELETE", "POST"],
+      "authorization": {
+        "GET": "auth-token-service",
+        "DELETE": "auth-token-service",
+        "PATCH": "auth-request-service",
+        "POST": "auth-request-service"
+      },
+      "request_validator": {
+        "GET": "None",
+        "POST": "None",
+        "PATCH": "None",
+        "DELETE": "None",
+        "OPTIONS": "None"
+      }
+    },
+    "products": {
+      "function_name": "product-backend-service",
+      "resource_path": "/products",
+      "cors_enabled": true,
+      "integration_type": "LAMBDA",
+      "methods": ["GET", "OPTIONS"],
+      "require_api_key": ["GET"],
+      "authorization": { "GET": "auth-request-service" },
+      "request_validator": { "GET": "None", "OPTIONS": "None" }
+    }
+  },
+  "authorizers": {
+    "auth-token-service": {
+      "function_name": "auth-token-service",
+      "authorizer_name": "APITokenAuthorizer",
+      "type": "TOKEN",
+      "identity_source": "method.request.header.authorizationToken"
+    },
+    "auth-request-service": {
+      "function_name": "auth-request-service",
+      "authorizer_name": "APIRequestAuthorizer",
+      "type": "REQUEST",
+      "identity_source": ["method.request.querystring.authorizationToken"]
+    }
+  },
+  "usage_plan": {
+    "rate_limit": 100,
+    "burst_limit": 20,
+    "limit": 1000,
+    "period": "MONTH"
+  }
+}

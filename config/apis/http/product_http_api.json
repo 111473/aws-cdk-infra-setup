@@ -1,0 +1,57 @@
+{
+  "name": "product-http-api",
+  "api_type": "HTTP",
+  "integration_target": "HTTP URI",
+  "http_method": "GET",
+  "cors": {
+    "allow_origins": ["*"],
+    "allow_methods": ["GET", "POST"],
+    "allow_headers": ["Authorization", "Content-Type"],
+    "max_age": 3600
+  },
+  "authorizers": {
+    "lambda_iam": {
+      "function_name": "iam-auth-service",
+      "type": "LAMBDA",
+      "response_mode": "iam",
+      "identity_source": "$request.header.Authorization",
+      "ttl_seconds": 0
+    },
+    "lambda_simple": {
+      "function_name": "simple-auth-service",
+      "type": "LAMBDA",
+      "response_mode": "simple",
+      "identity_source": "$request.header.Authorization",
+      "ttl_seconds": 0
+    }
+  },
+  "routes": {
+    "status": {
+      "resource_path": "/status",
+      "function_name": "product-backend-service",
+      "methods": ["GET"],
+      "authorization": { "GET": "lambda_iam" },
+      "cors_enabled": true
+    },
+    "product": {
+      "resource_path": "/product",
+      "function_name": "product-backend-service",
+      "methods": ["GET", "DELETE", "PATCH", "POST"],
+      "authorization": {
+        "GET": "lambda_simple",
+        "DELETE": "lambda_iam",
+        "PATCH": "lambda_iam",
+        "POST": "lambda_simple"
+      },
+      "cors_enabled": true
+    },
+    "products": {
+      "resource_path": "/products",
+      "url": "http://petstore-demo-endpoint.execute-api.com/petstore/pets",
+      "function_name": "product-backend-service",
+      "methods": ["GET"],
+      "authorization": { "GET": "lambda_simple" },
+      "cors_enabled": true
+    }
+  }
+}
